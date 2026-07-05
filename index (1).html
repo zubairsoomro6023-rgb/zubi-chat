@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>Zubi</title>
+
+<meta charset="UTF-8">
+
+<meta name="application-name" content="Zubi">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Zubi">
+<meta name="format-detection" content="telephone=no">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="author" content="Zubair Soomro">
+<meta name="creator" content="Zubair Soomro">
+<meta name="description" content="Zubi is a real time messaging application created by Zubair Soomro. Connect and chat online with users.">
+<meta name="keywords" content="Zubi, Online Chat, Messenger App, Real Time Chat">
+<meta name="robots" content="index, follow">
+
+<meta property="og:title" content="Zubi | Online Chat App">
+<meta property="og:description" content="Real time chat application created by Zubair Soomro">
+<meta property="og:type" content="website">
+
+<meta name="theme-color" content="#25d366">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%2325d366%22/><text x=%2250%22 y=%2265%22 font-size=%2255%22 text-anchor=%22middle%22 fill=%22white%22>💬</text></svg>">
+
+<link rel="canonical" href="https://YOUR-DOMAIN.com/">
+
+<meta property="og:site_name" content="Zubi">
+<meta property="og:url" content="https://YOUR-DOMAIN.com/">
+<meta property="og:image" content="https://YOUR-DOMAIN.com/preview.png">
+<meta property="og:image:alt" content="Zubi Preview">
+<meta property="og:locale" content="en_US">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"Zubi",
+  "url":"https://YOUR-DOMAIN.com/",
+  "applicationCategory":"CommunicationApplication",
+  "operatingSystem":"Any",
+  "description":"Zubi is a real time online messaging application created by Zubair Soomro.",
+  "author":{
+    "@type":"Person",
+    "name":"Zubair Soomro"
+  },
+  "creator":{
+    "@type":"Person",
+    "name":"Zubair Soomro"
+  }
+}
+</script>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:"Segoe UI",Helvetica,Arial,sans-serif;
+  background:linear-gradient(180deg,#05070f 0%,#0b1024 40%,#141a35 100%);
+  color:#eaf1ff;
+  min-height:100vh;
+  transition:.3s;
+}
+
+.bolt{
+  display:none;
+}
+
+.lightningTitle{
+  text-align:center;
+  color:#fff;
+  font-size:34px;
+  font-weight:800;
+  letter-spacing:1px;
+  padding:35px 0 5px;
+  text-shadow:0 0 8px #8ec4ff,0 0 20px #4c7eff,0 0 40px #2952c8;
+  position:relative;
+  z-index:1;
+}
+
+.container{
+  width:95%;
+  max-width:900px;
+  margin:0 auto;
+  background:rgba(15,20,40,.55);
+  backdrop-filter:blur(4px);
+  padding:0;
+  border-radius:0;
+  overflow:hidden;
+  min-height:100vh;
+  box-shadow:0 0 35px rgba(76,126,255,.25);
+  border-left:1px solid rgba(140,180,255,.15);
+  border-right:1px solid rgba(140,180,255,.15);
+  transition:.3s;
+}
+
+.appHeader{
+  background:linear-gradient(135deg,#141a35,#0b1024);
+  color:#eaf1ff;
+  padding:14px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 0 15px rgba(76,126,255,.35);
+  border-bottom:1px solid rgba(140,180,255,.25);
+}
+
+.appHeader h1{
+  margin:0;
+  font-size:20px;
+  font-weight:600;
+  text-shadow:0 0 8px #4c7eff,0 0 18px #2952c8;
+}
+
+.appHeader button{
+  background:rgba(76,126,255,.2);
+  color:#fff;
+  font-size:13px;
+  padding:8px 12px;
+  border:1px solid rgba(140,180,255,.4);
+}
+
+.appHeader button:hover{
+  background:rgba(76,126,255,.4);
+  transform:none;
+  box-shadow:0 0 12px rgba(76,126,255,.6);
+}
+
+.bodyPad{
+  padding:16px;
+}
+
+button{
+  background:linear-gradient(135deg,#4c7eff,#2952c8);
+  color:white;
+  border:none;
+  padding:10px 15px;
+  border-radius:20px;
+  cursor:pointer;
+  font-weight:bold;
+  transition:.3s;
+  box-shadow:0 0 10px rgba(76,126,255,.4);
+}
+
+button:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 18px rgba(76,126,255,.7);
+}
+
+input{
+  width:90%;
+  padding:12px;
+  margin:5px;
+  border-radius:20px;
+  border:1px solid #ccc;
+}
+
+#loginBox{
+  max-width:420px;
+  margin:10px auto 40px;
+  text-align:center;
+  padding:30px 24px;
+  border-radius:16px;
+  background:rgba(15,20,40,.75);
+  backdrop-filter:blur(6px);
+  box-shadow:0 0 25px rgba(76,126,255,.35),0 0 60px rgba(76,126,255,.15);
+  border:1px solid rgba(140,180,255,.35);
+  position:relative;
+  z-index:1;
+  color:#eaf1ff;
+}
+
+#loginBox h2,
+#loginBox h3{
+  margin:10px 0;
+  color:#eaf1ff;
+}
+
+#loginBox h2::before{
+  content:"";
+}
+
+#loginBox hr{
+  margin:20px 0;
+  border:none;
+  border-top:1px solid rgba(140,180,255,.3);
+}
+
+#loginBox input{
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  border-radius:10px;
+  border:1px solid rgba(140,180,255,.4);
+  background:rgba(255,255,255,.06);
+  color:#fff;
+  font-size:15px;
+  outline:none;
+  transition:.3s;
+}
+
+#loginBox input::placeholder{
+  color:#9fb3d9;
+}
+
+#loginBox input:focus{
+  border-color:#4c7eff;
+  box-shadow:0 0 10px rgba(76,126,255,.6);
+}
+
+#loginBox button{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  font-size:15px;
+  background:linear-gradient(135deg,#4c7eff,#2952c8);
+  box-shadow:0 0 12px rgba(76,126,255,.5);
+}
+
+#loginBox button:hover{
+  box-shadow:0 0 20px rgba(76,126,255,.85);
+}
+
+#phoneNumber,
+#otpCode{
+  letter-spacing:1px;
+}
+
+#recaptcha-container{
+  margin-top:15px;
+  margin-bottom:15px;
+  display:flex;
+  justify-content:center;
+}
+
+.profileImg{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid #25d366;
+}
+
+#photoFile{
+  display:none;
+}
+
+#chat{
+  display:none;
+}
+
+.chatLayout{
+  display:flex;
+  gap:0;
+  background:rgba(10,14,30,.6);
+  border-radius:0 0 8px 8px;
+  overflow:hidden;
+  min-height:450px;
+}
+
+#users{
+  width:280px;
+  min-height:450px;
+  background:rgba(10,14,30,.75);
+  border-right:1px solid rgba(140,180,255,.2);
+  overflow:auto;
+}
+
+.user{
+  padding:12px 14px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  cursor:pointer;
+  border-bottom:1px solid rgba(140,180,255,.12);
+  border-radius:0;
+  color:#eaf1ff;
+}
+
+.user:hover,
+.user.active{
+  background:rgba(76,126,255,.25);
+  color:#fff;
+  box-shadow:inset 0 0 12px rgba(76,126,255,.35);
+}
+
+.user img{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  object-fit:cover;
+  flex-shrink:0;
+  border:1px solid rgba(140,180,255,.4);
+}
+
+.user span{
+  font-size:15px;
+  font-weight:500;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.chatBox{
+  flex:1;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  min-height:450px;
+}
+
+#selectedUser{
+  background:linear-gradient(135deg,#141a35,#0b1024);
+  color:#fff;
+  margin:0;
+  padding:14px 16px;
+  font-size:16px;
+  font-weight:600;
+  border-bottom:1px solid rgba(140,180,255,.25);
+  text-shadow:0 0 8px rgba(76,126,255,.6);
+}
+
+.chatBox input,
+.chatBox button{
+  margin:8px 8px;
+}
+
+#messages{
+  flex:1;
+  height:auto;
+  min-height:300px;
+  background:radial-gradient(ellipse at top,#141a35 0%,#05070f 70%);
+  border-radius:0;
+  padding:15px;
+  overflow:auto;
+  display:flex;
+  flex-direction:column;
+}
+
+.myMsg{
+  background:linear-gradient(135deg,#2952c8,#4c7eff);
+  color:#fff;
+  padding:8px 12px;
+  margin:4px 8px;
+  border-radius:10px 10px 0 10px;
+  max-width:70%;
+  margin-left:auto;
+  box-shadow:0 0 10px rgba(76,126,255,.5);
+}
+
+.otherMsg{
+  background:rgba(255,255,255,.08);
+  color:#eaf1ff;
+  padding:8px 12px;
+  margin:4px 8px;
+  border-radius:10px 10px 10px 0;
+  max-width:70%;
+  box-shadow:0 1px 6px rgba(0,0,0,.3);
+  border:1px solid rgba(140,180,255,.2);
+}
+
+.myMsg button,
+.otherMsg button{
+  padding:4px 10px;
+  font-size:11px;
+  border-radius:12px;
+  margin-top:6px;
+  margin-right:4px;
+}
+
+.msgTime{
+  font-size:11px;
+  opacity:.7;
+}
+
+body.dark{
+  background:#111;
+  color:#fff;
+}
+
+body.dark .container{
+  background:#1d1d1d;
+  color:#fff;
+}
+
+body.dark #loginBox{
+  background:#262626;
+  color:#fff;
+}
+
+body.dark input{
+  background:#333;
+  color:#fff;
+  border:1px solid #555;
+}
+
+body.dark input::placeholder{
+  color:#bbb;
+}
+
+body.dark button{
+  background:#25d366;
+  color:#fff;
+}
+
+body.dark #messages{
+  background:#111;
+}
+
+body.dark .myMsg{
+  background:#25d366;
+  color:#fff;
+}
+
+body.dark .otherMsg{
+  background:#3b3b3b;
+  color:#fff;
+}
+
+body.dark #users{
+  background:#1d1d1d;
+  border-color:#333;
+}
+
+body.dark .user{
+  border-color:#2a2a2a;
+}
+
+body.dark .user:hover,
+body.dark .user.active{
+  background:#2a2a2a;
+  color:#fff;
+}
+
+body.dark .chatBox{
+  background:#1d1d1d;
+}
+
+body.dark .myMsg{
+  background:#005c4b;
+  color:#fff;
+}
+
+body.dark .appHeader{
+  background:#1f2c2b;
+}
+
+@media(max-width:600px){
+  #loginBox{
+    width:95%;
+    padding:15px;
+  }
+
+  #loginBox input,
+  #loginBox button{
+    width:100%;
+  }
+}
+
+</style>
+</head>
+
+<body class="loginScreen">
+
+<div class="bolt"></div>
+
+<div class="container">
+
+<div class="appHeader">
+<h1>💬 Zubi</h1>
+<button id="darkModeBtn" onclick="darkMode()">🌙 Dark Mode</button>
+</div>
+
+<div class="bodyPad">
+
+<!-- LOGIN BOX -->
+<div id="loginBox">
+
+<h2>Zubi Login</h2>
+
+<!-- Signup / Email Login -->
+<input id="name" placeholder="Full Name">
+<input id="email" type="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+
+<button onclick="signup()">Create Account</button>
+<button onclick="login()">Login With Email</button>
+
+<hr>
+
+<h3>OR</h3>
+
+<!-- PHONE LOGIN -->
+<input id="phoneNumber" type="tel" placeholder="+923001234567">
+
+<div id="recaptcha-container"></div>
+
+<button id="sendOtpBtn" onclick="sendOTP()">Send OTP</button>
+
+<input id="otpCode" placeholder="Enter OTP" style="display:none;">
+
+<button id="verifyOtpBtn" onclick="verifyOTP()" style="display:none;">Verify OTP</button>
+
+</div>
+
+<!-- CHAT AREA -->
+<div id="chat">
+
+<h3 id="welcome"></h3>
+
+<!-- PROFILE -->
+<img id="profileImg" class="profileImg" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+
+<br><br>
+
+<button onclick="document.getElementById('photoFile').click()">📷 Change Profile Photo</button>
+
+<input type="file" id="photoFile" accept="image/*" onchange="uploadLocalPhoto(event)" hidden>
+
+<br><br>
+
+<button onclick="logout()">Logout</button>
+
+<hr>
+
+<!-- CHAT LAYOUT -->
+<div class="chatLayout">
+
+<!-- USERS -->
+<div id="users"></div>
+
+<!-- CHAT BOX -->
+<div class="chatBox">
+
+<h3 id="selectedUser">Select User</h3>
+
+<input id="friendEmail" placeholder="Friend Email" readonly style="display:none;">
+
+<div id="messages"></div>
+
+<div style="display:flex;align-items:center;padding:8px;">
+<input id="message" placeholder="Type a message" style="flex:1;">
+<button onclick="sendMessage()">➤ Send</button>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPhoneNumber,
+  RecaptchaVerifier,
+  onAuthStateChanged,
+  signOut,
+  updateProfile
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  collection,
+  onSnapshot,
+  addDoc,
+  deleteDoc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+// FIREBASE CONFIG
+const firebaseConfig = {
+  apiKey: "AIzaSyCC_MPGuD86T4Ir1DhS-ZSNWv8hPJRRv0U",
+  authDomain: "mess-chat-e3994.firebaseapp.com",
+  projectId: "mess-chat-e3994",
+  storageBucket: "mess-chat-e3994.firebasestorage.app",
+  messagingSenderId: "694058995301",
+  appId: "1:694058995301:web:d3aaf15c43f2b8865a008c"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let confirmationResult = null;
+let recaptchaVerifier = null;
+let currentFriendUid = null;
+let unsubscribeMessages = null;
+let unsubscribeUsers = null;
+
+// ---------- DARK MODE ----------
+window.darkMode = function () {
+  document.body.classList.toggle("dark");
+  const isDark = document.body.classList.contains("dark");
+  localStorage.setItem("darkMode", isDark ? "1" : "0");
+  document.getElementById("darkModeBtn").innerHTML = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
+};
+
+(function applySavedTheme() {
+  if (localStorage.getItem("darkMode") === "1") {
+    document.body.classList.add("dark");
+    document.getElementById("darkModeBtn").innerHTML = "☀️ Light Mode";
+  }
+})();
+
+// ---------- RECAPTCHA ----------
+function ensureRecaptcha() {
+  if (recaptchaVerifier) return recaptchaVerifier;
+
+  recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
+    size: "normal",
+    callback: () => {
+      console.log("reCAPTCHA Verified");
+    },
+    "expired-callback": () => {
+      console.log("reCAPTCHA Expired");
+      alert("reCAPTCHA expired, please try again.");
+    }
+  });
+
+  recaptchaVerifier.render().catch(err => console.error("Recaptcha render error:", err));
+
+  return recaptchaVerifier;
+}
+
+// Render recaptcha widget as soon as the page loads
+ensureRecaptcha();
+
+// ---------- AUTH STATE ----------
+onAuthStateChanged(auth, async (user) => {
+
+  if (user) {
+
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("chat").style.display = "block";
+    document.body.classList.remove("loginScreen");
+
+    document.getElementById("welcome").innerHTML =
+      "Welcome " + (user.displayName || user.phoneNumber || user.email);
+
+    await setDoc(
+      doc(db, "users", user.uid),
+      {
+        uid: user.uid,
+        name: user.displayName || user.phoneNumber || user.email || "User",
+        email: user.email || "",
+        phone: user.phoneNumber || "",
+        status: "Online",
+        lastSeen: new Date().toLocaleString()
+      },
+      { merge: true }
+    );
+
+    // Load own saved profile photo, if any
+    try {
+      const selfSnap = await getDoc(doc(db, "users", user.uid));
+      if (selfSnap.exists() && selfSnap.data().photo) {
+        document.getElementById("profileImg").src = selfSnap.data().photo;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+
+    loadUsersList();
+
+  } else {
+
+    document.getElementById("loginBox").style.display = "block";
+    document.getElementById("chat").style.display = "none";
+    document.body.classList.add("loginScreen");
+
+    document.getElementById("otpCode").style.display = "none";
+    document.getElementById("verifyOtpBtn").style.display = "none";
+    document.getElementById("otpCode").value = "";
+    confirmationResult = null;
+
+    if (unsubscribeUsers) { unsubscribeUsers(); unsubscribeUsers = null; }
+    if (unsubscribeMessages) { unsubscribeMessages(); unsubscribeMessages = null; }
+    currentFriendUid = null;
+  }
+
+});
+
+// ---------- SIGNUP (Email) ----------
+window.signup = function () {
+
+  let name = document.getElementById("name").value.trim();
+  let email = document.getElementById("email").value.trim();
+  let password = document.getElementById("password").value;
+
+  if (!email || !password) {
+    alert("Please enter email and password");
+    return;
+  }
+
+  createUserWithEmailAndPassword(auth, email, password)
+    .then(async (userCred) => {
+      if (name) {
+        await updateProfile(userCred.user, { displayName: name });
+      }
+      alert("Account Created");
+    })
+    .catch(err => alert(err.message));
+
+};
+
+// ---------- LOGIN (Email) ----------
+window.login = function () {
+
+  let email = document.getElementById("email").value.trim();
+  let password = document.getElementById("password").value;
+
+  if (!email || !password) {
+    alert("Please enter email and password");
+    return;
+  }
+
+  signInWithEmailAndPassword(auth, email, password)
+    .catch(err => alert(err.message));
+
+};
+
+// ---------- SEND OTP (Phone) ----------
+window.sendOTP = async function () {
+
+  let phone = document.getElementById("phoneNumber").value.trim();
+
+  if (phone === "") {
+    alert("Enter phone number");
+    return;
+  }
+
+  if (!phone.startsWith("+")) {
+    alert("Phone number must start with country code.\nExample: +923001234567");
+    return;
+  }
+
+  try {
+
+    const verifier = ensureRecaptcha();
+
+    confirmationResult = await signInWithPhoneNumber(auth, phone, verifier);
+
+    document.getElementById("otpCode").style.display = "block";
+    document.getElementById("verifyOtpBtn").style.display = "inline-block";
+
+    alert("OTP Sent Successfully");
+
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+
+};
+
+// ---------- VERIFY OTP (Phone) ----------
+window.verifyOTP = async function () {
+
+  let otp = document.getElementById("otpCode").value.trim();
+
+  if (otp === "") {
+    alert("Enter OTP");
+    return;
+  }
+
+  if (!confirmationResult) {
+    alert("Please send OTP first.");
+    return;
+  }
+
+  try {
+
+    await confirmationResult.confirm(otp);
+    alert("Phone Login Successful");
+    // onAuthStateChanged handles the rest (UI switch + saving user doc)
+
+  } catch (err) {
+    console.error(err);
+    alert("Invalid OTP");
+  }
+
+};
+
+// ---------- LOGOUT ----------
+window.logout = async function () {
+  await signOut(auth);
+};
+
+// ---------- PROFILE PHOTO ----------
+window.uploadLocalPhoto = function (event) {
+
+  if (!auth.currentUser) {
+    alert("Please login first");
+    return;
+  }
+
+  let file = event.target.files[0];
+  if (!file) return;
+
+  let reader = new FileReader();
+
+  reader.onload = function () {
+    let img = reader.result;
+    document.getElementById("profileImg").src = img;
+
+    setDoc(doc(db, "users", auth.currentUser.uid), {
+      photo: img
+    }, { merge: true }).catch(err => console.error(err));
+  };
+
+  reader.readAsDataURL(file);
+
+};
+
+// ---------- USERS LIST ----------
+function loadUsersList() {
+
+  if (unsubscribeUsers) unsubscribeUsers();
+
+  unsubscribeUsers = onSnapshot(collection(db, "users"), (snap) => {
+
+    let box = document.getElementById("users");
+    box.innerHTML = "";
+
+    snap.forEach(docu => {
+
+      let d = docu.data();
+      if (!auth.currentUser || docu.id === auth.currentUser.uid) return;
+
+      let div = document.createElement("div");
+      div.className = "user" + (docu.id === currentFriendUid ? " active" : "");
+
+      let photo = d.photo || "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+      let label = d.name || d.email || d.phone || "User";
+
+      div.innerHTML = `<img src="${photo}"><span>${label}</span>`;
+      div.onclick = () => window.openUser(docu.id, label);
+
+      box.appendChild(div);
+    });
+
+  });
+
+}
+
+// ---------- OPEN CHAT WITH USER ----------
+window.openUser = function (uid, name) {
+
+  if (!auth.currentUser) return;
+
+  currentFriendUid = uid;
+  document.getElementById("friendEmail").value = uid;
+  document.getElementById("selectedUser").innerText = name || "Chat";
+
+  // highlight active user
+  document.querySelectorAll("#users .user").forEach(el => el.classList.remove("active"));
+  loadUsersList();
+
+  if (unsubscribeMessages) unsubscribeMessages();
+
+  let chatId = [auth.currentUser.uid, uid].sort().join("_");
+
+  unsubscribeMessages = onSnapshot(collection(db, "chats", chatId, "messages"), (snap) => {
+
+    let box = document.getElementById("messages");
+    box.innerHTML = "";
+
+    snap.forEach(docu => {
+
+      let d = docu.data();
+      let div = document.createElement("div");
+
+      div.className = (d.user === auth.currentUser.uid) ? "myMsg" : "otherMsg";
+
+      div.innerHTML = `
+        <b>${d.senderName || d.user}</b>
+        <br>
+        ${d.text}
+        <br>
+        <span class="msgTime">${d.time}</span>
+        <br>
+        <button onclick="deleteMsg('${docu.id}')">Delete</button>
+        <button onclick="editMsg('${docu.id}')">Edit</button>
+        <button onclick="react('${docu.id}','❤️')">❤️</button>
+        ${d.reaction || ""}
+      `;
+
+      box.appendChild(div);
+    });
+
+    box.scrollTop = box.scrollHeight;
+
+  });
+
+};
+
+// ---------- SEND MESSAGE ----------
+window.sendMessage = async function () {
+
+  let msg = document.getElementById("message").value.trim();
+
+  if (!msg || !currentFriendUid || !auth.currentUser) return;
+
+  let chatId = [auth.currentUser.uid, currentFriendUid].sort().join("_");
+
+  await addDoc(collection(db, "chats", chatId, "messages"), {
+    text: msg,
+    user: auth.currentUser.uid,
+    senderName: auth.currentUser.displayName || auth.currentUser.phoneNumber || auth.currentUser.email || "User",
+    time: new Date().toLocaleTimeString(),
+    reaction: ""
+  });
+
+  document.getElementById("message").value = "";
+
+};
+
+// ---------- DELETE MESSAGE ----------
+window.deleteMsg = async function (id) {
+
+  if (!currentFriendUid || !auth.currentUser) return;
+
+  let chatId = [auth.currentUser.uid, currentFriendUid].sort().join("_");
+
+  await deleteDoc(doc(db, "chats", chatId, "messages", id));
+
+};
+
+// ---------- EDIT MESSAGE ----------
+window.editMsg = async function (id) {
+
+  let newText = prompt("Edit message");
+  if (!newText) return;
+
+  if (!currentFriendUid || !auth.currentUser) return;
+
+  let chatId = [auth.currentUser.uid, currentFriendUid].sort().join("_");
+
+  await updateDoc(doc(db, "chats", chatId, "messages", id), {
+    text: newText
+  });
+
+};
+
+// ---------- REACTION ----------
+window.react = async function (id, emoji) {
+
+  if (!currentFriendUid || !auth.currentUser) return;
+
+  let chatId = [auth.currentUser.uid, currentFriendUid].sort().join("_");
+
+  await updateDoc(doc(db, "chats", chatId, "messages", id), {
+    reaction: emoji
+  });
+
+};
+
+</script>
+
+</body>
+</html>
